@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: nodejsapp
+    restart: always
+  web:
+    build: .
+    environment:
+      MYSQL_DATABASE: nodejsapp
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_HOST: db
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+    restart: on-failure
